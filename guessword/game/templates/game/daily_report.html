@@ -1,0 +1,21 @@
+<h2>Daily Report for {{ date }}</h2>
+<p>Users Played Today: {{ users_played_count }}</p>
+<p>Correct Guesses: {{ correct_guesses_count }}</p>
+
+<h3>All Sessions Today:</h3>
+<table border="1">
+    <tr>
+        <th>Player</th>
+        <th>Word</th>
+        <th>Status</th>
+    </tr>
+    {% for s in sessions %}
+    <tr>
+        <td>{{ s.player.username }}</td>
+        <td>{{ s.word.text }}</td>
+        <td>{{ s.status }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="{% url 'home' %}">Back to Admin Home</a>

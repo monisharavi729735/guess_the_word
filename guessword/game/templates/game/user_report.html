@@ -1,0 +1,23 @@
+<h2>User Report</h2>
+<table border="1">
+    <tr>
+        <th>User</th>
+        <th>Dates Played</th>
+        <th>Total Words Tried</th>
+        <th>Correct Guesses</th>
+    </tr>
+    {% for r in report_data %}
+    <tr>
+        <td>{{ r.user.username }}</td>
+        <td>
+            {% for d in r.dates_played %}
+                {{ d }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </td>
+        <td>{{ r.total_words }}</td>
+        <td>{{ r.correct_words }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="{% url 'home' %}">Back to Admin Home</a>

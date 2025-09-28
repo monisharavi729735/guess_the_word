@@ -1,0 +1,32 @@
+<h2>Guess the 5-letter word</h2>
+
+{% if message %}
+<p style="color:red">{{ message }}</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="guess" maxlength="5" required placeholder="Enter 5-letter word">
+    <button type="submit">Submit Guess</button>
+</form>
+
+<h3>Previous Guesses:</h3>
+<ul>
+    {% for guess in guesses_display %}
+        <li>
+            {% for letter, fb in guess %}
+                {% if fb == "GREEN" %}
+                    <span style="background-color:green;color:white;">{{ letter }}</span>
+                {% elif fb == "ORANGE" %}
+                    <span style="background-color:orange;color:white;">{{ letter }}</span>
+                {% else %}
+                    <span style="background-color:grey;color:white;">{{ letter }}</span>
+                {% endif %}
+            {% endfor %}
+        </li>
+    {% empty %}
+        <li>No guesses yet!</li>
+    {% endfor %}
+</ul>
+
+<p>Attempts Left: {{ session.attempts_left }}</p>
