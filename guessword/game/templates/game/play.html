@@ -21,7 +21,7 @@
             color: white;
         }
         .guess-green { background-color: #28a745; }   /* Green */
-        .guess-orange { background-color: #fd7e14; }  /* Orange */
+        .guess-yellow { background-color: #aaa700; }  /* Yellow */
         .guess-grey { background-color: #6c757d; }    /* Grey */
     </style>
 </head>
@@ -53,7 +53,7 @@
                             {% if fb == "GREEN" %}
                                 <span class="guess-box guess-green">{{ letter }}</span>
                             {% elif fb == "ORANGE" %}
-                                <span class="guess-box guess-orange">{{ letter }}</span>
+                                <span class="guess-box guess-yellow">{{ letter }}</span>
                             {% else %}
                                 <span class="guess-box guess-grey">{{ letter }}</span>
                             {% endif %}
