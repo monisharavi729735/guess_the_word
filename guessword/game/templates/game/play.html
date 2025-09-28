@@ -1,32 +1,75 @@
-<h2>Guess the 5-letter word</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Word</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .guess-box {
+            display: inline-block;
+            width: 45px;
+            height: 45px;
+            line-height: 45px;
+            margin: 2px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            border-radius: 5px;
+            color: white;
+        }
+        .guess-green { background-color: #28a745; }   /* Green */
+        .guess-orange { background-color: #fd7e14; }  /* Orange */
+        .guess-grey { background-color: #6c757d; }    /* Grey */
+    </style>
+</head>
+<body class="bg-light">
 
-{% if message %}
-<p style="color:red">{{ message }}</p>
-{% endif %}
+<div class="container py-5">
+    <div class="card shadow-sm">
+        <div class="card-body text-center">
+            <h2 class="card-title mb-4">🔤 Guess the 5-letter word</h2>
 
-<form method="post">
-    {% csrf_token %}
-    <input type="text" name="guess" maxlength="5" required placeholder="Enter 5-letter word">
-    <button type="submit">Submit Guess</button>
-</form>
+            {% if message %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endif %}
 
-<h3>Previous Guesses:</h3>
-<ul>
-    {% for guess in guesses_display %}
-        <li>
-            {% for letter, fb in guess %}
-                {% if fb == "GREEN" %}
-                    <span style="background-color:green;color:white;">{{ letter }}</span>
-                {% elif fb == "ORANGE" %}
-                    <span style="background-color:orange;color:white;">{{ letter }}</span>
-                {% else %}
-                    <span style="background-color:grey;color:white;">{{ letter }}</span>
-                {% endif %}
-            {% endfor %}
-        </li>
-    {% empty %}
-        <li>No guesses yet!</li>
-    {% endfor %}
-</ul>
+            <form method="post" class="mb-4">
+                {% csrf_token %}
+                <div class="input-group justify-content-center">
+                    <input type="text" name="guess" maxlength="5" required placeholder="Enter 5-letter word"
+                           class="form-control text-uppercase text-center" style="max-width: 200px;">
+                    <button type="submit" class="btn btn-primary">Submit Guess</button>
+                </div>
+            </form>
 
-<p>Attempts Left: {{ session.attempts_left }}</p>
+            <h4 class="mb-3">Previous Guesses</h4>
+            <ul class="list-unstyled">
+                {% for guess in guesses_display %}
+                    <li>
+                        {% for letter, fb in guess %}
+                            {% if fb == "GREEN" %}
+                                <span class="guess-box guess-green">{{ letter }}</span>
+                            {% elif fb == "ORANGE" %}
+                                <span class="guess-box guess-orange">{{ letter }}</span>
+                            {% else %}
+                                <span class="guess-box guess-grey">{{ letter }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </li>
+                {% empty %}
+                    <li class="text-muted">No guesses yet!</li>
+                {% endfor %}
+            </ul>
+
+            <p class="mt-3"><strong>Attempts Left:</strong> {{ session.attempts_left }}</p>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

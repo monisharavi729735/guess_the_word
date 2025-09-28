@@ -1,23 +1,68 @@
-<h2>User Report</h2>
-<table border="1">
-    <tr>
-        <th>User</th>
-        <th>Dates Played</th>
-        <th>Total Words Tried</th>
-        <th>Correct Guesses</th>
-    </tr>
-    {% for r in report_data %}
-    <tr>
-        <td>{{ r.user.username }}</td>
-        <td>
-            {% for d in r.dates_played %}
-                {{ d }}{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-        </td>
-        <td>{{ r.total_words }}</td>
-        <td>{{ r.correct_words }}</td>
-    </tr>
-    {% endfor %}
-</table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Report</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
 
-<a href="{% url 'home' %}">Back to Admin Home</a>
+<div class="container py-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">👥 User Report</h2>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>User</th>
+                            <th>Dates Played</th>
+                            <th>Total Words Tried</th>
+                            <th>Correct Guesses</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in report_data %}
+                        <tr>
+                            <td><strong>{{ r.user.username }}</strong></td>
+                            <td>
+                                {% if r.dates_played %}
+                                    {% for d in r.dates_played %}
+                                        <span class="badge bg-secondary">{{ d }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    <span class="text-muted">No plays</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ r.total_words }}</td>
+                            <td>
+                                {% if r.correct_words > 0 %}
+                                    <span class="badge bg-success">{{ r.correct_words }}</span>
+                                {% else %}
+                                    <span class="badge bg-danger">0</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">No user data available</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'home' %}" class="btn btn-outline-secondary">⬅ Back to Admin Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

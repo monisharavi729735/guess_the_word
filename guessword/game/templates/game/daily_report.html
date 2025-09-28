@@ -1,21 +1,76 @@
-<h2>Daily Report for {{ date }}</h2>
-<p>Users Played Today: {{ users_played_count }}</p>
-<p>Correct Guesses: {{ correct_guesses_count }}</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Report</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
 
-<h3>All Sessions Today:</h3>
-<table border="1">
-    <tr>
-        <th>Player</th>
-        <th>Word</th>
-        <th>Status</th>
-    </tr>
-    {% for s in sessions %}
-    <tr>
-        <td>{{ s.player.username }}</td>
-        <td>{{ s.word.text }}</td>
-        <td>{{ s.status }}</td>
-    </tr>
-    {% endfor %}
-</table>
+<div class="container py-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">📅 Daily Report for {{ date }}</h2>
+            
+            <div class="row text-center mb-4">
+                <div class="col-md-6">
+                    <div class="p-3 bg-primary text-white rounded">
+                        <h5>Users Played Today</h5>
+                        <h3>{{ users_played_count }}</h3>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 bg-success text-white rounded">
+                        <h5>Correct Guesses</h5>
+                        <h3>{{ correct_guesses_count }}</h3>
+                    </div>
+                </div>
+            </div>
 
-<a href="{% url 'home' %}">Back to Admin Home</a>
+            <h4 class="mb-3">All Sessions Today</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Player</th>
+                            <th>Word</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in sessions %}
+                        <tr>
+                            <td>{{ s.player.username }}</td>
+                            <td>{{ s.word.text }}</td>
+                            <td>
+                                {% if s.status == "Won" %}
+                                    <span class="badge bg-success">Won</span>
+                                {% elif s.status == "Lost" %}
+                                    <span class="badge bg-danger">Lost</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ s.status }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">No sessions today</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'home' %}" class="btn btn-outline-secondary">⬅ Back to Admin Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
