@@ -10,3 +10,5 @@ media
 
 # Backup files # 
 *.bak 
+
+env/
